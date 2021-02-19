@@ -10,15 +10,18 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:johnny-code-logger.helloWorld"
+    "onCommand:johnny-code-logger.helloWorld",
+    "onCommand:editor.action.clipboardPasteAction"
   ],
   "main": "./out/extension.js",
   "contributes": {
-    "commands": [
-      {
+    "commands": [{
         "command": "johnny-code-logger.helloWorld",
         "title": "Hello World"
       }
+    ],
+    "keybindings": [
+    
     ]
   },
   "scripts": {

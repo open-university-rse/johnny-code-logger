@@ -6,21 +6,47 @@ import * as vscode from 'vscode';
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
-	// Use the console to output diagnostic information (console.log) and errors (console.error)
-	// This line of code will only be executed once when your extension is activated
-	console.log('Congratulations, your extension "johnny-code-logger" is now active!');
+	var disposableArray = [];
 
-	// The command has been defined in the package.json file
-	// Now provide the implementation of the command with registerCommand
-	// The commandId parameter must match the command field in package.json
-	let disposable = vscode.commands.registerCommand('johnny-code-logger.helloWorld', () => {
-		// The code you place here will be executed every time your command is executed
-
-		// Display a message box to the user
+	disposableArray.push(vscode.commands.registerCommand('johnny-code-logger.helloWorld', () => {
+	
 		vscode.window.showInformationMessage('Hello World from johnny-code-logger!');
-	});
+	}));
 
-	context.subscriptions.push(disposable);
+	var clipboardPasteDisposable = vscode.commands.registerTextEditorCommand('editor.action.clipboardPasteAction', overriddenClipboardPasteAction);
+	disposableArray.push(clipboardPasteDisposable);
+	async function overriddenClipboardPasteAction() {
+
+		//debug
+		var clipboardContent = await vscode.env.clipboard.readText(); 
+		// console.log(clipboardContent);
+	
+		// send paste to server
+	
+		//dispose of the overridden editor.action.clipboardCopyAction- back to default copy behavior
+		clipboardPasteDisposable.dispose();
+	
+		//execute the default editor.action.clipboardCopyAction to copy
+		vscode.commands.executeCommand("editor.action.clipboardPasteAction").then(function(){
+	
+			// console.log("After Copy");
+	
+			//add the overridden editor.action.clipboardCopyAction back
+			clipboardPasteDisposable = vscode.commands.registerTextEditorCommand('editor.action.clipboardPasteAction', overriddenClipboardPasteAction);
+			disposableArray.push(clipboardPasteDisposable);
+		}); 
+	}
+
+	// disposableArray.push(vscode.commands.registerCommand('clipboard.paste', () => {
+	// 	console.log("clipboard.paste");
+    //     vscode.commands.executeCommand("editor.action.clipboardPasteAction");
+    // }));
+
+	// disposableArray.push(vscode.commands.registerCommand('clipboard.pasteFromClipboard', () => {
+    //     console.log("clipboard.pasteFromClipboard");
+    // }));
+
+	context.subscriptions.concat(disposableArray);
 }
 
 // this method is called when your extension is deactivated
