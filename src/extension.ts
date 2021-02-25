@@ -2,20 +2,24 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
+import { getTimeSinceLastUpload } from './timer';
 var Client = require('node-rest-client').Client;
 var client = new Client();
-var history = require("./src/node-browser-history/index");
+// var browserHistory = require("./node-browser-history/index");
 const USER_ID = 3;
 // const BASE_REST_URL = 'http://0.0.0.0:8000';
 const BASE_REST_URL = 'http://192.168.1.134:8000';
 const CLIPBOARD_URL = BASE_REST_URL + "/api/clipboard/";
 const FILES_URL = BASE_REST_URL + "/api/file/";
 const BROWSER_HISTORY_URL = BASE_REST_URL + "/api/website/";
+var time = require("./timer");
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
+	console.log('time.sessionStartTime', time.sessionStartTime);
+	
 	var disposableArray = [];
 
 	disposableArray.push(vscode.commands.registerCommand('johnny-code-logger.helloWorld', () => {
@@ -85,6 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 			}
 		}
+		updateBrowserHistory();
 	})
 	// send new websites
 	// {
@@ -99,6 +104,13 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.concat(disposableArray);
 }
+function updateBrowserHistory() {
+ 	var lastUpload = time.getTimeSinceLastUpload();
+	var diff = time.getTimeSinceLastUpload();
+	console.log('diff', diff);
+}
 
 // this method is called when your extension is deactivated
-export function deactivate() { }
+export function deactivate() { 
+	
+}

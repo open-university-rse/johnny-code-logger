@@ -10,7 +10,7 @@
     "Other"
   ],
   "activationEvents": [
-    "onCommand:johnny-code-logger.helloWorld",
+    "*",
     "onCommand:editor.action.clipboardPasteAction",
     "onCommand:vscode.workspace.onDidSaveTextDocument"
   ],
