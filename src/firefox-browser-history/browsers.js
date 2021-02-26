@@ -1,4 +1,5 @@
-const Path =  require('path')
+/* eslint-disable @typescript-eslint/naming-convention */
+const Path =  require('path');
 const fs = require("fs");
 
 const CHROME = "Google Chrome",
@@ -41,9 +42,11 @@ let defaultPaths = {
     avast: ""
 };
 if (process.platform === 'linux'){
+    console.log('linux');
     let basePath = Path.join(process.env.HOME);
 
     defaultPaths.firefox = Path.join(basePath, ".mozilla", "firefox", "/");
+    console.log('defaultPaths.firefox', defaultPaths.firefox);
     
 
 } else if (process.platform === "darwin") {

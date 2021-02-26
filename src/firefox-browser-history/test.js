@@ -206,8 +206,8 @@ Promise.all(tests).then(() => {
     console.log("PASSING ALL TESTS");
     process.exit(0);
 }).catch(error => {
-    console.log('kasjdlasdjlaskdjalskdj')
-    console.log(error)
+    console.log('kasjdlasdjlaskdjalskdj');
+    console.log(error);
     process.exit(error);
 });
 

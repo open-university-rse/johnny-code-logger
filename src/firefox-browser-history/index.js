@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/naming-convention */
 const path = require("path");
 const fs = require("fs");
 const Database = require("sqlite-async");
@@ -55,7 +56,7 @@ async function getHistoryFromDb(newDbPath, sql, browserName) {
 }
 
 function copyDbAndWalFile(dbPath, fileExtension = 'sqlite') {
-    var newDbPath = ""
+    var newDbPath = "";
     if (process.platform === 'linux'){
         newDbPath = path.join("/tmp", uuidV4() + `.${fileExtension}`);
     }

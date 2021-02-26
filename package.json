@@ -26,6 +26,8 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run compile",
+    "build": "tsc --build",
+    "clean": "tsc --build --clean",
     "compile": "tsc -p ./",
     "watch": "tsc -watch -p ./",
     "pretest": "npm run compile && npm run lint",
@@ -46,6 +48,9 @@
     "vscode-test": "^1.4.1"
   },
   "dependencies": {
-    "node-rest-client": "^3.1.0"
+    "firefox-browser-history": "file:src/firefox-browser-history",
+    "node-rest-client": "^3.1.0",
+    "sqlite-async": "^1.1.1",
+    "uuid": "^8.3.2"
   }
 }

@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 import { getTimeSinceLastUpload } from './timer';
 var Client = require('node-rest-client').Client;
 var client = new Client();
-// var browserHistory = require("./node-browser-history/index");
+const browserHistory = require("firefox-browser-history");
 const USER_ID = 3;
 // const BASE_REST_URL = 'http://0.0.0.0:8000';
 const BASE_REST_URL = 'http://192.168.1.134:8000';
@@ -89,7 +89,7 @@ export function activate(context: vscode.ExtensionContext) {
 				});
 			}
 		}
-		updateBrowserHistory();
+		await updateBrowserHistory();
 	})
 	// send new websites
 	// {
@@ -104,10 +104,24 @@ export function activate(context: vscode.ExtensionContext) {
 
 	context.subscriptions.concat(disposableArray);
 }
-function updateBrowserHistory() {
+export async function updateBrowserHistory() {
  	var lastUpload = time.getTimeSinceLastUpload();
 	var diff = time.getTimeSinceLastUpload();
 	console.log('diff', diff);
+	if (Math.abs(diff) > 1000){
+		console.log('getting history');
+		browserHistory.getFirefoxHistory(180).then(function (history: any) {
+			console.log('history length: ', history.length);
+			console.log('done getting history');
+		  });
+		  
+		// var history = await browserHistory.getFirefoxHistory(10);
+		// if(history.length > 0){
+		// 	for (var i = 0; i < history.length; i){
+		// 		console.log(history[i].url);
+		// 	}
+		// }
+	}
 }
 
 // this method is called when your extension is deactivated
