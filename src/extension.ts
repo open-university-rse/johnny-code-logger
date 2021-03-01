@@ -15,6 +15,7 @@ const BROWSER_HISTORY_URL = BASE_REST_URL + "/api/website/";
 var time = require("./timer");
 const BROWSER_HISTORY_DELAY_MINUTES = 1;
 const BROWSER_HISTORY_DELAY_SECONDS = 60 * BROWSER_HISTORY_DELAY_MINUTES;
+const BROWSER_HISTORY_DELAY_MS = 1000 * BROWSER_HISTORY_DELAY_SECONDS;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -100,47 +101,37 @@ export function activate(context: vscode.ExtensionContext) {
 	context.subscriptions.concat(disposableArray);
 }
 
-// send new websites
-		// {
-		// 	"user_id": 3,
-		// 	"time": "2012-09-04 06:00:01.000000-08:00",
-		// 	"url": "https://www.google.com/search?q=pytest+not+finding+tests"
-
-		// }
-
 export async function updateBrowserHistory() {
-	var lastUpload = time.getTimeSinceLastUpload();
+	
 	var diff = time.getTimeSinceLastUpload();
+
+	var duration = Math.ceil(Math.abs(diff) / 60000);
+	console.log('duration', duration);
 	console.log('diff', diff);
-	if (Math.abs(diff) > BROWSER_HISTORY_DELAY_SECONDS) {
-		browserHistory.getFirefoxHistory(180).then(function (history: any) {
-			// console.log('getting history', history.keys());
-			history.forEach((row: any) => {
-				row.forEach((element: any) => {
-					console.log('element', element);
+
+	browserHistory.getFirefoxHistory(duration).then(function (history: any) {
+		
+		history.forEach((row: any) => {
+			row.forEach((element: any) => {
+				
+				// send individual link
+				var args = {
+					data: { user_id: USER_ID, time: element.utc_time, url: element.url, title:element.title },
+					headers: { "Content-Type": "application/json" }
+				};
+				
+				client.post(BROWSER_HISTORY_URL, args, function (data: any, response: any) {
+					// parsed response body as js obj
+					console.log("Sending website: ", data);
+					// raw response
+					console.log(response);
 				});
-			
 			});
-
-
-			// for (var i = 0; i < history.length; i++) {
-
-			// 	// send individual link
-			// 	var args = {
-			// 		data: { user_id: USER_ID, time: history[i].utc_time, url: history[i].url },
-			// 		headers: { "Content-Type": "application/json" }
-			// 	};
-			// 	console.log('history[i].url', history[i].utc_time);
-
-			// 	// client.post(BROWSER_HISTORY_URL, args, function (data: any, response: any) {
-			// 	// 	// parsed response body as js object
-			// 	// 	console.log(data);
-			// 	// 	// raw response
-			// 	// 	console.log(response);
-			// 	// });
-			// }
 		});
-	}
+		// reset timer
+		time.setTime();
+	});
+	
 }
 
 // this method is called when your extension is deactivated

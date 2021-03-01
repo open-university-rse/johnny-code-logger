@@ -13,6 +13,11 @@ export function setGetLastHistoryUpload() {
 export function getTimeSinceLastUpload() {
     now = new Date();
     var difference = timeOflastHistoryUpload.getTime() - now.getTime();
+    console.log('timeOflastHistoryUpload', timeOflastHistoryUpload);
     return difference;
+}
+export function setTime(){
+    timeOflastHistoryUpload = new Date();
+    console.log('timeOflastHistoryUpload', timeOflastHistoryUpload);
 }
 

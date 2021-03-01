@@ -42,7 +42,6 @@ let defaultPaths = {
     avast: ""
 };
 if (process.platform === 'linux'){
-    console.log('linux');
     let basePath = Path.join(process.env.HOME);
 
     defaultPaths.firefox = Path.join(basePath, ".mozilla", "firefox", "/");
