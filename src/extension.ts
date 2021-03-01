@@ -13,13 +13,15 @@ const CLIPBOARD_URL = BASE_REST_URL + "/api/clipboard/";
 const FILES_URL = BASE_REST_URL + "/api/file/";
 const BROWSER_HISTORY_URL = BASE_REST_URL + "/api/website/";
 var time = require("./timer");
+const BROWSER_HISTORY_DELAY_MINUTES = 1;
+const BROWSER_HISTORY_DELAY_SECONDS = 60 * BROWSER_HISTORY_DELAY_MINUTES;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
 
 	console.log('time.sessionStartTime', time.sessionStartTime);
-	
+
 	var disposableArray = [];
 
 	disposableArray.push(vscode.commands.registerCommand('johnny-code-logger.helloWorld', () => {
@@ -91,40 +93,57 @@ export function activate(context: vscode.ExtensionContext) {
 		}
 		await updateBrowserHistory();
 	})
-	// send new websites
-	// {
-	// 	"user_id": 3,
-	// 	"time": "2012-09-04 06:00:01.000000-08:00",
-	// 	"url": "https://www.google.com/search?q=pytest+not+finding+tests"
-	
-	// }
+		
 
-	
 	);
 
 	context.subscriptions.concat(disposableArray);
 }
+
+// send new websites
+		// {
+		// 	"user_id": 3,
+		// 	"time": "2012-09-04 06:00:01.000000-08:00",
+		// 	"url": "https://www.google.com/search?q=pytest+not+finding+tests"
+
+		// }
+
 export async function updateBrowserHistory() {
- 	var lastUpload = time.getTimeSinceLastUpload();
+	var lastUpload = time.getTimeSinceLastUpload();
 	var diff = time.getTimeSinceLastUpload();
 	console.log('diff', diff);
-	if (Math.abs(diff) > 1000){
-		console.log('getting history');
+	if (Math.abs(diff) > BROWSER_HISTORY_DELAY_SECONDS) {
 		browserHistory.getFirefoxHistory(180).then(function (history: any) {
-			console.log('history length: ', history.length);
-			console.log('done getting history');
-		  });
-		  
-		// var history = await browserHistory.getFirefoxHistory(10);
-		// if(history.length > 0){
-		// 	for (var i = 0; i < history.length; i){
-		// 		console.log(history[i].url);
-		// 	}
-		// }
+			// console.log('getting history', history.keys());
+			history.forEach((row: any) => {
+				row.forEach((element: any) => {
+					console.log('element', element);
+				});
+			
+			});
+
+
+			// for (var i = 0; i < history.length; i++) {
+
+			// 	// send individual link
+			// 	var args = {
+			// 		data: { user_id: USER_ID, time: history[i].utc_time, url: history[i].url },
+			// 		headers: { "Content-Type": "application/json" }
+			// 	};
+			// 	console.log('history[i].url', history[i].utc_time);
+
+			// 	// client.post(BROWSER_HISTORY_URL, args, function (data: any, response: any) {
+			// 	// 	// parsed response body as js object
+			// 	// 	console.log(data);
+			// 	// 	// raw response
+			// 	// 	console.log(response);
+			// 	// });
+			// }
+		});
 	}
 }
 
 // this method is called when your extension is deactivated
-export function deactivate() { 
-	
+export function deactivate() {
+
 }
