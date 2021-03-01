@@ -2,7 +2,6 @@
 // The module 'vscode' contains the VS Code extensibility API
 // Import the module and reference it with the alias vscode in your code below
 import * as vscode from 'vscode';
-import { getTimeSinceLastUpload } from './timer';
 var Client = require('node-rest-client').Client;
 var client = new Client();
 const browserHistory = require("firefox-browser-history");
@@ -13,9 +12,6 @@ const CLIPBOARD_URL = BASE_REST_URL + "/api/clipboard/";
 const FILES_URL = BASE_REST_URL + "/api/file/";
 const BROWSER_HISTORY_URL = BASE_REST_URL + "/api/website/";
 var time = require("./timer");
-const BROWSER_HISTORY_DELAY_MINUTES = 1;
-const BROWSER_HISTORY_DELAY_SECONDS = 60 * BROWSER_HISTORY_DELAY_MINUTES;
-const BROWSER_HISTORY_DELAY_MS = 1000 * BROWSER_HISTORY_DELAY_SECONDS;
 
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
