@@ -5,7 +5,7 @@ import * as vscode from 'vscode';
 var Client = require('node-rest-client').Client;
 var client = new Client();
 const browserHistory = require("firefox-browser-history");
-const USER_ID = 3;
+const USER_ID = 5;
 // const BASE_REST_URL = 'http://0.0.0.0:8000';
 const BASE_REST_URL = 'http://192.168.1.134:8000';
 const CLIPBOARD_URL = BASE_REST_URL + "/api/clipboard/";
