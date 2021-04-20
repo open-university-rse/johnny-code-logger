@@ -2,6 +2,9 @@
 
 johnny-code-logger is a VSCode extension created by Paul Lunn for the Johnny project at the Open University, Milton Keynes, UK.
 
+URL for johnny-django-docker - https://stem-ts-gitlab.open.ac.uk/pl4742/johnny-django-docker
+URL for johnny-code-logger - https://stem-ts-gitlab.open.ac.uk/pl4742/johnny-code-logger
+
 # set up
 
 This plug in works in tandem with johnny-django-docker which provides a REST API to a database which stores all information.
