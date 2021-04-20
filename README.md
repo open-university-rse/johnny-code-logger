@@ -1,65 +1,16 @@
 # johnny-code-logger README
 
-This is the README for your extension "johnny-code-logger". After writing up a brief description, we recommend including the following sections.
+johnny-code-logger is a VSCode extension created by Paul Lunn for the Johnny project at the Open University, Milton Keynes, UK.
 
-## Features
+# set up
 
-Describe specific features of your extension including screenshots of your extension in action. Image paths are relative to this README file.
+This plug in works in tandem with johnny-django-docker which provides a REST API to a database which stores all information.
+After the database has been set up, you need to change the const BASE_REST_URL which can be found in extension.ts to the url for the server database.
 
-For example if there is an image subfolder under your extension project workspace:
+# How this works
 
-\!\[feature X\]\(images/feature-x.png\)
+This extension will send the following data to the remote server:
 
-> Tip: Many popular extensions utilize animations. This is an excellent way to show off your extension! We recommend short, focused animations that are easy to follow.
-
-## Requirements
-
-If you have any requirements or dependencies, add a section describing those and how to install and configure them.
-
-## Extension Settings
-
-Include if your extension adds any VS Code settings through the `contributes.configuration` extension point.
-
-For example:
-
-This extension contributes the following settings:
-
-* `myExtension.enable`: enable/disable this extension
-* `myExtension.thing`: set to `blah` to do something
-
-## Known Issues
-
-Calling out known issues can help limit users opening duplicate issues against your extension.
-
-## Release Notes
-
-Users appreciate release notes as you update your extension.
-
-### 1.0.0
-
-Initial release of ...
-
-### 1.0.1
-
-Fixed issue #.
-
-### 1.1.0
-
-Added features X, Y, and Z.
-
------------------------------------------------------------------------------------------------------------
-
-## Working with Markdown
-
-**Note:** You can author your README using Visual Studio Code.  Here are some useful editor keyboard shortcuts:
-
-* Split the editor (`Cmd+\` on macOS or `Ctrl+\` on Windows and Linux)
-* Toggle preview (`Shift+CMD+V` on macOS or `Shift+Ctrl+V` on Windows and Linux)
-* Press `Ctrl+Space` (Windows, Linux) or `Cmd+Space` (macOS) to see a list of Markdown snippets
-
-### For more information
-
-* [Visual Studio Code's Markdown Support](http://code.visualstudio.com/docs/languages/markdown)
-* [Markdown Syntax Reference](https://help.github.com/articles/markdown-basics/)
-
-**Enjoy!**
+* Copy of any python source file that is saved
+* The contents of the clipboard when ever a paste occurs
+* A copy of the users firefox browser history
